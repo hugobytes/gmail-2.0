@@ -74,7 +74,7 @@
     </div>
   </div>
   <modal-view v-if="openedEmail" @closeModal="openedEmail = null">
-    <mail-view :email="openedEmail" />
+    <mail-view :email="openedEmail" @changeEmail="changeEmail" />
   </modal-view>
 </template>
 
@@ -85,6 +85,13 @@ import axios from "axios";
 import Email from "../models/email";
 import MailView from "./MailView.vue";
 import ModalView from "./ModalView.vue";
+
+interface ChangeEmailOptions {
+  toggleArchived: boolean;
+  toggleRead: boolean;
+  save: boolean;
+  changeIndex: number;
+}
 
 export default defineComponent({
   components: { MailView, ModalView },
@@ -110,10 +117,13 @@ export default defineComponent({
     };
   },
   methods: {
-    openEmail(email: Email) {
-      email.read = true;
-      this.updateEmail(email);
+    openEmail(email: Email | null) {
       this.openedEmail = email;
+
+      if (email) {
+        email.read = true;
+        this.updateEmail(email);
+      }
     },
     archiveEmail(email: Email) {
       email.archived = true;
@@ -121,6 +131,36 @@ export default defineComponent({
     },
     updateEmail(email: Email) {
       axios.put(`emails/${email.id}`, email);
+    },
+    changeEmail({
+      toggleArchived,
+      toggleRead,
+      changeIndex,
+      save,
+    }: ChangeEmailOptions) {
+      const email = this.openedEmail;
+
+      if (changeIndex && this.openedEmail) {
+        const currentIndex = this.unarchivedEmails
+          .map((email) => email.id)
+          .indexOf(this.openedEmail.id);
+        const nextIndex = currentIndex + changeIndex;
+        this.openEmail(this.unarchivedEmails[nextIndex]);
+      }
+
+      if (email) {
+        if (toggleArchived) {
+          email.archived = !email.archived;
+        }
+
+        if (toggleRead) {
+          email.read = !email.read;
+        }
+
+        if (save) {
+          this.updateEmail(email);
+        }
+      }
     },
   },
 });

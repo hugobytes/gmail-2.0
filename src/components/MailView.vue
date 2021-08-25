@@ -74,12 +74,12 @@ import marked from "marked";
 import { format } from "date-fns";
 import { defineComponent, PropType } from "vue";
 import Email from "../models/email";
-import axios from "axios";
 import useKeydown from "../composables/use-keydown";
 
 export default defineComponent({
   name: "MailView",
-  setup(props) {
+  emits: ["changeEmail"],
+  setup(_props, { emit }) {
     useKeydown([
       {
         key: "r",
@@ -89,23 +89,47 @@ export default defineComponent({
         key: "e",
         fn: () => toggleArchived(),
       },
+      {
+        key: "j",
+        fn: () => goNewer(),
+      },
+      {
+        key: "k",
+        fn: () => goOlder(),
+      },
+      {
+        key: "[",
+        fn: () => goNewerAndArchive(),
+      },
+      {
+        key: "]",
+        fn: () => goOlderAndArchive(),
+      },
     ]);
 
-    const email = props.email;
-
     const toggleRead = () => {
-      email.read = !email.read;
-      axios.put(`emails/${email.id}`, email);
+      emit("changeEmail", { toggleRead: true, save: true });
     };
 
     const toggleArchived = () => {
-      email.archived = !email.archived;
-      axios.put(`emails/${email.id}`, email);
+      emit("changeEmail", { toggleArchived: true, save: true });
     };
 
-    const goNewer = () => {};
+    const goNewer = () => {
+      emit("changeEmail", { changeIndex: -1 });
+    };
 
-    const goOlder = () => {};
+    const goOlder = () => {
+      emit("changeEmail", { changeIndex: 1 });
+    };
+
+    const goNewerAndArchive = () => {
+      emit("changeEmail", { toggleArchived: true, save: true, changeIndex: 1 });
+    };
+
+    const goOlderAndArchive = () => {
+      emit("changeEmail", { toggleArchived: true, save: true, changeIndex: 1 });
+    };
 
     return {
       marked,
