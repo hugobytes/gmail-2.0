@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-white">
     <h2 class="text-xl mt-3">{{ email.subject }}</h2>
     <h3 class="font-semibold mt-2">
       From: {{ email.from }} on

@@ -17,7 +17,10 @@
       @click="openEmail(email)"
     >
       <div class="mr-4">
-        <input type="checkbox" class="cursor-pointer" />
+        <input
+          type="checkbox"
+          class="h-5 w-5 text-pink-600 cursor-pointer focus:ring-4 rounded"
+        />
       </div>
       <div class="w-48 truncate mr-3">
         {{ email.from }}
@@ -70,7 +73,9 @@
       </button>
     </div>
   </div>
-  <mail-view v-if="openedEmail" :email="openedEmail" />
+  <modal-view v-if="openedEmail" @closeModal="openedEmail = null">
+    <mail-view :email="openedEmail" />
+  </modal-view>
 </template>
 
 <script lang="ts">
@@ -79,9 +84,10 @@ import { defineComponent, Ref, ref } from "vue";
 import axios from "axios";
 import Email from "../models/email";
 import MailView from "./MailView.vue";
+import ModalView from "./ModalView.vue";
 
 export default defineComponent({
-  components: { MailView },
+  components: { MailView, ModalView },
   name: "MailTable",
   computed: {
     sortedEmails(): Email[] {
