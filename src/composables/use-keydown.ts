@@ -8,10 +8,10 @@ interface KeyCombo {
 const useKeydown = (keyCombos: KeyCombo[]) => {
     const onKeydown = (e: KeyboardEvent) => {
 
-        const matchedKeyCallback = keyCombos.find(kc => kc.key == e.key)
+        const matchedKeyCallbacks = keyCombos.filter(kc => kc.key == e.key)
 
-        if (matchedKeyCallback) {
-            matchedKeyCallback.fn()
+        for (const match of matchedKeyCallbacks) {
+            match.fn()
         }
     };
 
