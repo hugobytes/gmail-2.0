@@ -54,9 +54,9 @@
         px-4
         py-2
         bg-gradient-to-br
-        from-blue-500
-        to-purple-900
-        hover:from-purple-900
+        from-red-400
+        to-purple-600
+        hover:to-red-400
         focus:ring-4
         rounded
         font-bold
@@ -74,26 +74,17 @@
 import { format } from "date-fns";
 import { defineComponent, ref } from "vue";
 import axios from "axios";
-
-interface Email {
-  id: number;
-  from: string;
-  subject: string;
-  body: string;
-  sentAt: string;
-  archived: boolean;
-  read: boolean;
-}
+import Email from "../models/email";
 
 export default defineComponent({
   name: "MailTable",
   computed: {
-    sortedEmails() {
+    sortedEmails(): Email[] {
       return this.emails.sort(
         (a, b) => new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime()
       );
     },
-    unarchivedEmails() {
+    unarchivedEmails(): Email[] {
       return this.sortedEmails.filter((email) => !email.archived);
     },
   },
@@ -101,8 +92,8 @@ export default defineComponent({
     const { data: emails } = await axios.get("emails");
 
     return {
-      format,
-      emails: ref(emails),
+      format: format as Function,
+      emails: ref(emails) as Email[],
     };
   },
   methods: {
