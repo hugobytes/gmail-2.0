@@ -11,7 +11,7 @@
         text-center text-blue-500
       "
     >
-      GMail 2.0
+      HuMail
     </h1>
     <suspense>
       <template #default>

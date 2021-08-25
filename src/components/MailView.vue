@@ -1,29 +1,72 @@
 <template>
-  <div class="bg-white">
-    <div class="flex mb-4">
-      <button class="mr-2 px-3 py-2 rounded bg-blue-500" @click="toggleRead">
-        {{ email.read ? "Mark as Unread (r)" : "Mark as Read (r)" }}
-      </button>
-      <button
-        class="mr-2 px-3 py-2 rounded bg-purple-500"
-        @click="toggleArchived"
-      >
-        {{ email.archived ? "Move to Inbox (e)" : "Archive (e)" }}
-      </button>
-      <button class="mr-2 px-3 py-2 rounded bg-green-500" @click="goOlder">
-        Older
-      </button>
-      <button class="mr-2 px-3 py-2 rounded bg-red-500" @click="goNewer">
-        Newer
-      </button>
-    </div>
-    <h2 class="text-xl mt-3">{{ email.subject }}</h2>
-    <h3 class="font-semibold mt-2">
-      From: {{ email.from }} on
-      {{ format(new Date(this.email.sentAt), "d MMM, yyyy") }}
-    </h3>
-    <div v-html="marked(email.body)" class="mt-2" />
+  <div class="flex mb-8">
+    <button
+      class="
+        mr-2
+        px-4
+        py-2
+        rounded
+        bg-blue-500
+        font-bold
+        text-white
+        focus:ring-4
+      "
+      @click="toggleRead"
+    >
+      {{ email.read ? "Mark as Unread (r)" : "Mark as Read (r)" }}
+    </button>
+    <button
+      class="
+        mr-2
+        px-4
+        py-2
+        rounded
+        bg-blue-600
+        font-bold
+        text-white
+        focus:ring-4
+      "
+      @click="toggleArchived"
+    >
+      {{ email.archived ? "Move to Inbox (e)" : "Archive (e)" }}
+    </button>
+    <button
+      class="
+        mr-2
+        px-4
+        py-2
+        rounded
+        bg-purple-600
+        font-bold
+        text-white
+        focus:ring-4
+      "
+      @click="goOlder"
+    >
+      Older
+    </button>
+    <button
+      class="
+        mr-2
+        px-4
+        py-2
+        rounded
+        bg-purple-700
+        font-bold
+        text-white
+        focus:ring-4
+      "
+      @click="goNewer"
+    >
+      Newer
+    </button>
   </div>
+  <h2 class="text-xl mt-3">{{ email.subject }}</h2>
+  <h3 class="font-semibold mt-2">
+    From: {{ email.from }} on
+    {{ format(new Date(this.email.sentAt), "d MMM, yyyy") }}
+  </h3>
+  <div v-html="marked(email.body)" class="mt-2" />
 </template>
 
 <script lang="ts">

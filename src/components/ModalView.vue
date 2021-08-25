@@ -24,7 +24,7 @@
       "
       @click="emit('closeModal')"
     />
-    <div class="bg-white rounded-2xl p-12 z-10 w-full max-w-screen-md">
+    <div class="bg-white rounded-2xl p-12 z-10 w-full max-w-screen-md skew-y-2">
       <slot />
     </div>
   </div>
