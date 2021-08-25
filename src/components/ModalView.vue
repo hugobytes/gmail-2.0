@@ -31,22 +31,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount } from "vue";
+import useKeydown from "../composables/use-keydown";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ModalView",
   setup(_props, { emit }) {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key == "Escape") {
-        emit("closeModal");
-      }
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("keydown", onKeyDown);
-    });
+    useKeydown([
+      {
+        key: "Escape",
+        fn: () => emit("closeModal"),
+      },
+    ]);
 
     return {
       emit,
