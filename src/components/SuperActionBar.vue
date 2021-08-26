@@ -4,9 +4,11 @@
       <input
         type="checkbox"
         @click="bulkSelect"
-        :checked="someSelected || allSelected"
+        :checked="allSelected"
         class="checkbox checkbox-primary focus:ring-4"
-        :class="{ 'opacity-25': someSelected }"
+        :class="{
+          'animate-spin bg-purple-600': someSelected,
+        }"
       />
     </div>
     <div class="flex-1" />
@@ -19,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ComputedRef, defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import useEmailSelection from "../composables/use-email-selection";
 import Email from "../models/email";
 
@@ -35,12 +37,13 @@ export default defineComponent({
     const emails = props.emails;
     const emailSelection = useEmailSelection();
 
-    const noneSelected = computed(() => emailSelection.emails.size == 0);
     const allSelected = computed(
-      () => emailSelection.emails.size == emails.length
+      () => emailSelection.emails.size === emails.length
     );
-    const someSelected: ComputedRef<boolean> = computed(
-      () => !allSelected.value && !noneSelected.value
+    const someSelected = computed(
+      () =>
+        emailSelection.emails.size !== emails.length &&
+        emailSelection.emails.size > 0
     );
 
     const bulkSelect = () => {
@@ -55,7 +58,6 @@ export default defineComponent({
       bulkSelect,
       someSelected,
       allSelected,
-      noneSelected,
       emailSelection,
     };
   },
