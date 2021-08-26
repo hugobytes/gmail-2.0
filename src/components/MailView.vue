@@ -30,21 +30,7 @@
     >
       {{ email.archived ? "Move to Inbox (e)" : "Archive (e)" }}
     </button>
-    <button
-      class="
-        mr-2
-        px-4
-        py-2
-        rounded
-        bg-purple-600
-        font-bold
-        text-white
-        focus:ring-4
-      "
-      @click="goOlder"
-    >
-      Older
-    </button>
+
     <button
       class="
         mr-2
@@ -59,6 +45,21 @@
       @click="goNewer"
     >
       Newer
+    </button>
+    <button
+      class="
+        mr-2
+        px-4
+        py-2
+        rounded
+        bg-purple-600
+        font-bold
+        text-white
+        focus:ring-4
+      "
+      @click="goOlder"
+    >
+      Older
     </button>
   </div>
   <h2 class="text-xl mt-3">{{ email.subject }}</h2>

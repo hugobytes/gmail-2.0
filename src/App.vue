@@ -11,7 +11,7 @@
         text-center text-blue-500
       "
     >
-      HuMail
+      HugMail
     </h1>
     <suspense>
       <template #default>
