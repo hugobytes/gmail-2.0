@@ -1,57 +1,66 @@
 <template>
-  <div class="border">
+  <h2 class="my-3 font-bold text-xl text-purple-300">
+    Emails selected: {{ emailSelection.emails.size }}
+  </h2>
+  <div class="border border-gray-600 rounded">
     <div
       class="
         cursor-pointer
-        hover:bg-gray-100
+        hover:bg-gray-800
         w-full
         flex
         items-center
         px-6
-        py-3
-        border-b border-gray-200
+        h-12
+        border-b border-gray-600
         relative
       "
       v-for="email in unarchivedEmails"
       :key="email.id"
-      @click="openEmail(email)"
     >
       <div class="mr-4">
         <input
           type="checkbox"
-          class="h-5 w-5 text-pink-600 cursor-pointer focus:ring-4 rounded"
+          @click="emailSelection.toggle(email)"
+          :checked="emailSelection.emails.has(email)"
+          class="checkbox checkbox-primary"
         />
       </div>
-      <div class="w-48 truncate mr-3">
-        {{ email.from }}
-      </div>
       <div
-        class="relative w-12 h-full flex items-center justify-center"
-        v-if="!email.read"
+        @click="openEmail(email)"
+        class="flex flex-1 items-center h-full px-3 truncate"
       >
-        <span class="flex h-3 w-3 absolute">
-          <span
-            class="
-              animate-ping
-              absolute
-              inline-flex
-              h-full
-              w-full
-              rounded-full
-              bg-purple-400
-              opacity-75
-            "
-          ></span>
-          <span
-            class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"
-          ></span>
-        </span>
-      </div>
-      <div :class="email.read ? '' : 'font-bold'" class="flex-1 truncate">
-        {{ email.subject }}
-      </div>
-      <div class="text-gray-700">
-        {{ format(new Date(email.sentAt), "d MMM, yyyy") }}
+        <div class="w-48 truncate mr-3">
+          {{ email.from }}
+        </div>
+        <div
+          class="relative w-12 h-full flex items-center justify-center"
+          v-if="!email.read"
+        >
+          <span class="flex h-3 w-3 absolute">
+            <span
+              class="
+                animate-ping
+                absolute
+                inline-flex
+                h-full
+                w-full
+                rounded-full
+                bg-purple-400
+                opacity-75
+              "
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"
+            ></span>
+          </span>
+        </div>
+        <div :class="email.read ? '' : 'font-bold'" class="flex-1 truncate">
+          {{ email.subject }}
+        </div>
+        <div class="text-gray-400">
+          {{ format(new Date(email.sentAt), "d MMM, yyyy") }}
+        </div>
       </div>
       <button
         class="
@@ -80,7 +89,7 @@
 
 <script lang="ts">
 import { format } from "date-fns";
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent, reactive, Ref, ref } from "vue";
 import axios from "axios";
 import Email from "../models/email";
 import MailView from "./MailView.vue";
@@ -110,10 +119,21 @@ export default defineComponent({
     const { data: emails } = await axios.get("emails");
     const openedEmail: Ref<Email | null> = ref(null);
 
+    const selected = reactive(new Set());
+    const emailSelection = {
+      emails: selected,
+      toggle(email: Email) {
+        return selected.has(email)
+          ? selected.delete(email)
+          : selected.add(email);
+      },
+    };
+
     return {
       format: format as Function,
       emails: ref(emails) as Email[],
       openedEmail,
+      emailSelection,
     };
   },
   methods: {
