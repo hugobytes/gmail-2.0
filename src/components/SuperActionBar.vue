@@ -118,8 +118,10 @@ export default defineComponent({
     const markUnread = () =>
       forSelected((email: Email) => (email.read = false));
 
-    const archive = () =>
+    const archive = () => {
       forSelected((email: Email) => (email.archived = true));
+      emailSelection.clear();
+    };
 
     return {
       bulkSelect,
