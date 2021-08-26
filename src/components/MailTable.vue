@@ -1,4 +1,35 @@
 <template>
+  <div class="flex mt-3 mb-8 mx-auto w-full justify-center">
+    <button
+      class="
+        mr-2
+        font-extrabold
+        disabled:underline
+        disabled:text-green-500
+        text-gray-400
+        hover:text-white
+      "
+      :disabled="screen == 'inbox'"
+      @click="setScreen('inbox')"
+    >
+      Inbox
+    </button>
+    <div class="text-gray-500">|</div>
+    <button
+      class="
+        ml-2
+        font-extrabold
+        disabled:underline
+        disabled:text-green-500
+        text-gray-400
+        hover:text-white
+      "
+      :disabled="screen == 'archives'"
+      @click="setScreen('archives')"
+    >
+      Archives
+    </button>
+  </div>
   <super-action-bar :emails="emails" />
   <div class="border border-gray-600 rounded shadow-md overflow-hidden">
     <div
@@ -14,7 +45,7 @@
         last:border-b-0
         relative
       "
-      v-for="email in unarchivedEmails"
+      v-for="email in filteredEmails"
       :key="email.id"
     >
       <div class="mr-4">
@@ -88,7 +119,7 @@
 
 <script lang="ts">
 import { format } from "date-fns";
-import { defineComponent, Ref, ref } from "vue";
+import { defineComponent, reactive, Ref, ref } from "vue";
 import axios from "axios";
 import Email from "../models/email";
 import MailView from "./MailView.vue";
@@ -112,19 +143,30 @@ export default defineComponent({
         (a, b) => new Date(b.sentAt).getTime() - new Date(a.sentAt).getTime()
       );
     },
-    unarchivedEmails(): Email[] {
-      return this.sortedEmails.filter((email) => !email.archived);
+    filteredEmails(): Email[] {
+      return this.screen == "inbox"
+        ? this.sortedEmails.filter((email) => !email.archived)
+        : this.sortedEmails.filter((email) => email.archived);
     },
   },
   async setup() {
+    const screen = ref("inbox");
     const { data: emails } = await axios.get("emails");
     const openedEmail: Ref<Email | null> = ref(null);
+    const emailSelection = useEmailSelection();
+
+    const setScreen = (newScreen: string) => {
+      screen.value = newScreen;
+      emailSelection.clear();
+    };
 
     return {
       format: format as Function,
       emails: ref(emails) as Email[],
       openedEmail,
       emailSelection: useEmailSelection(),
+      setScreen,
+      screen,
     };
   },
   methods: {
@@ -152,11 +194,11 @@ export default defineComponent({
       const email = this.openedEmail;
 
       if (changeIndex && this.openedEmail) {
-        const currentIndex = this.unarchivedEmails
+        const currentIndex = this.filteredEmails
           .map((email) => email.id)
           .indexOf(this.openedEmail.id);
         const nextIndex = currentIndex + changeIndex;
-        this.openEmail(this.unarchivedEmails[nextIndex]);
+        this.openEmail(this.filteredEmails[nextIndex]);
       }
 
       if (email) {
