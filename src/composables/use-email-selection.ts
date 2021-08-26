@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import Email from "../models/email";
 
-const emails = reactive(new Set());
+const emails: Set<Email> = reactive(new Set());
 
 export default function useEmailSelection() {
 

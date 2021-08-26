@@ -72,6 +72,7 @@
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { computed, defineComponent, PropType } from "vue";
 import useEmailSelection from "../composables/use-email-selection";
 import Email from "../models/email";
@@ -105,11 +106,20 @@ export default defineComponent({
       }
     };
 
-    const markRead = () => {};
+    const forSelected = (fn: Function) => {
+      [...emailSelection.emails].forEach((email: Email) => {
+        fn(email);
+        axios.put(`emails/${email.id}`, email);
+      });
+    };
 
-    const markUnread = () => {};
+    const markRead = () => forSelected((email: Email) => (email.read = true));
 
-    const archive = () => {};
+    const markUnread = () =>
+      forSelected((email: Email) => (email.read = false));
+
+    const archive = () =>
+      forSelected((email: Email) => (email.archived = true));
 
     return {
       bulkSelect,
