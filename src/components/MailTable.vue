@@ -63,8 +63,8 @@
       </div>
       <button
         class="
-          px-4
-          py-2
+          px-3
+          py-1
           bg-gradient-to-br
           from-red-400
           to-purple-600

@@ -65,12 +65,6 @@
     >
       Archive
     </button>
-    <div class="flex-1" />
-    <div>
-      <h2 class="font-bold text-xl text-white">
-        Emails selected: {{ emailSelection.emails.size }}
-      </h2>
-    </div>
   </div>
 </template>
 
