@@ -1,7 +1,5 @@
 <template>
-  <h2 class="my-3 font-bold text-xl text-purple-300">
-    Emails selected: {{ emailSelection.emails.size }}
-  </h2>
+  <super-action-bar :emails="emails" />
   <div class="border border-gray-600 rounded shadow-md overflow-hidden">
     <div
       class="
@@ -24,7 +22,7 @@
           type="checkbox"
           @click="emailSelection.toggle(email)"
           :checked="emailSelection.emails.has(email)"
-          class="checkbox checkbox-primary"
+          class="checkbox checkbox-primary focus:ring-4"
         />
       </div>
       <div
@@ -96,6 +94,7 @@ import Email from "../models/email";
 import MailView from "./MailView.vue";
 import ModalView from "./ModalView.vue";
 import useEmailSelection from "../composables/use-email-selection";
+import SuperActionBar from "./SuperActionBar.vue";
 
 interface ChangeEmailOptions {
   toggleArchived: boolean;
@@ -105,7 +104,7 @@ interface ChangeEmailOptions {
 }
 
 export default defineComponent({
-  components: { MailView, ModalView },
+  components: { MailView, ModalView, SuperActionBar },
   name: "MailTable",
   computed: {
     sortedEmails(): Email[] {

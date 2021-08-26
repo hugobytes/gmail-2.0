@@ -11,8 +11,20 @@ export default function useEmailSelection() {
             : emails.add(email);
     }
 
+    const clear = () => {
+        emails.clear()
+    }
+
+    const selectMultiple = (emailsToAdd: Email[]) => {
+        emailsToAdd.forEach(email => {
+            emails.add(email)
+        })
+    }
+
     return {
         emails,
         toggle,
+        clear,
+        selectMultiple
     }
 }
