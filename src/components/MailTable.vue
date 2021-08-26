@@ -89,11 +89,12 @@
 
 <script lang="ts">
 import { format } from "date-fns";
-import { defineComponent, reactive, Ref, ref } from "vue";
+import { defineComponent, Ref, ref } from "vue";
 import axios from "axios";
 import Email from "../models/email";
 import MailView from "./MailView.vue";
 import ModalView from "./ModalView.vue";
+import useEmailSelection from "../composables/use-email-selection";
 
 interface ChangeEmailOptions {
   toggleArchived: boolean;
@@ -119,21 +120,11 @@ export default defineComponent({
     const { data: emails } = await axios.get("emails");
     const openedEmail: Ref<Email | null> = ref(null);
 
-    const selected = reactive(new Set());
-    const emailSelection = {
-      emails: selected,
-      toggle(email: Email) {
-        return selected.has(email)
-          ? selected.delete(email)
-          : selected.add(email);
-      },
-    };
-
     return {
       format: format as Function,
       emails: ref(emails) as Email[],
       openedEmail,
-      emailSelection,
+      emailSelection: useEmailSelection(),
     };
   },
   methods: {
