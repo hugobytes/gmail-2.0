@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center h-12">
-    <div class="ml-6">
+  <div class="flex items-center h-12 pb-4">
+    <div class="ml-6 mt-[6px]">
       <input
         type="checkbox"
         @click="bulkSelect"
@@ -11,6 +11,57 @@
         }"
       />
     </div>
+    <button
+      class="
+        ml-6
+        px-3
+        py-1
+        rounded
+        bg-blue-600
+        font-bold
+        text-white
+        focus:ring-4
+        disabled:opacity-50
+        disabled:bg-gray-600
+      "
+      @click="markRead"
+    >
+      Mark Read
+    </button>
+    <button
+      class="
+        ml-2
+        px-3
+        py-1
+        rounded
+        bg-blue-700
+        font-bold
+        text-white
+        focus:ring-4
+        disabled:opacity-50
+        disabled:bg-gray-600
+      "
+      @click="markUnread"
+    >
+      Mark Unread
+    </button>
+    <button
+      class="
+        ml-2
+        px-3
+        py-1
+        rounded
+        bg-purple-700
+        font-bold
+        text-white
+        focus:ring-4
+        disabled:opacity-50
+        disabled:bg-gray-600
+      "
+      @click="archive"
+    >
+      Archive
+    </button>
     <div class="flex-1" />
     <div>
       <h2 class="font-bold text-xl text-white">
@@ -54,11 +105,20 @@ export default defineComponent({
       }
     };
 
+    const markRead = () => {};
+
+    const markUnread = () => {};
+
+    const archive = () => {};
+
     return {
       bulkSelect,
       someSelected,
       allSelected,
       emailSelection,
+      markRead,
+      markUnread,
+      archive,
     };
   },
 });

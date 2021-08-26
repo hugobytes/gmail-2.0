@@ -5,10 +5,10 @@
         font-extrabold
         leading-tight
         text-4xl
-        my-4
+        my-8
         mx-auto
         animate-bounce
-        text-center text-blue-500
+        text-center text-green-400
       "
     >
       HugMail
