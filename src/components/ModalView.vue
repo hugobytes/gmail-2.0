@@ -24,29 +24,44 @@
       "
       @click="emit('closeModal')"
     />
-    <div
-      class="
-        bg-gray-800
-        shadow-2xl
-        rounded-2xl
-        p-12
-        z-10
-        w-full
-        max-w-screen-md
-        skew-y-2
-      "
-    >
-      <slot />
-    </div>
+    <transition name="bounce">
+      <div
+        v-if="show"
+        class="
+          bg-gray-800
+          shadow-2xl
+          rounded-2xl
+          p-12
+          z-10
+          w-full
+          max-w-screen-md
+        "
+      >
+        <slot />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
 import useKeydown from "../composables/use-keydown";
-import { defineComponent } from "vue";
+import { defineComponent, nextTick } from "vue";
 
 export default defineComponent({
   name: "ModalView",
+  data() {
+    return {
+      show: false,
+    };
+  },
+  created() {
+    nextTick(() => {
+      this.show = true;
+    });
+  },
+  beforeUnmount() {
+    this.show = false;
+  },
   setup(_props, { emit }) {
     useKeydown([
       {
@@ -61,3 +76,4 @@ export default defineComponent({
   },
 });
 </script>
+
