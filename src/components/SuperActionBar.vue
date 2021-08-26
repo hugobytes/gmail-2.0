@@ -25,6 +25,7 @@
         disabled:bg-gray-600
       "
       @click="markRead"
+      :disabled="[...emailSelection.emails].every((email) => email.read)"
     >
       Mark Read
     </button>
@@ -41,6 +42,7 @@
         disabled:opacity-50
         disabled:bg-gray-600
       "
+      :disabled="[...emailSelection.emails].every((email) => !email.read)"
       @click="markUnread"
     >
       Mark Unread
@@ -59,6 +61,7 @@
         disabled:bg-gray-600
       "
       @click="archive"
+      :disabled="emailSelection.emails.size == 0"
     >
       Archive
     </button>
