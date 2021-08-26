@@ -2,7 +2,7 @@
   <h2 class="my-3 font-bold text-xl text-purple-300">
     Emails selected: {{ emailSelection.emails.size }}
   </h2>
-  <div class="border border-gray-600 rounded">
+  <div class="border border-gray-600 rounded shadow-md overflow-hidden">
     <div
       class="
         cursor-pointer
@@ -13,6 +13,7 @@
         px-6
         h-12
         border-b border-gray-600
+        last:border-b-0
         relative
       "
       v-for="email in unarchivedEmails"
