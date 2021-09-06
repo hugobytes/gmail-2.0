@@ -1,0 +1,2 @@
+openssl req -new -out dev_nurole_com.csr -key dev_nurole_com.key -config dev_nurole_com.cnf
+openssl x509 -req -days 3650 -in dev_nurole_com.csr -signkey dev_nurole_com.key -out dev_nurole_com.crt -extensions v3_req -extfile dev_nurole_com.cnf

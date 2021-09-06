@@ -7,16 +7,13 @@
         text-4xl
         my-8
         mx-auto
-        animate-bounce
         text-center text-green-400
       "
     >
-      HugMail
+      Match Rate
     </h1>
     <suspense>
-      <template #default>
-        <mail-table />
-      </template>
+      <template #default> <match-rate-statistics /> </template>
       <template #fallback>
         <div
           class="
@@ -37,10 +34,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MailTable from "./components/MailTable.vue";
+import MatchRateStatistics from "./components/MatchRateStatistics.vue";
 
 export default defineComponent({
-  components: { MailTable },
+  components: { MatchRateStatistics },
   name: "App",
 });
 </script>
