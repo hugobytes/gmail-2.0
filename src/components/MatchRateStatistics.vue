@@ -1,7 +1,11 @@
 <template>
-  <div v-for="stat in stats" class="flex items-cente text-xl">
-    <div class="font-bold mr-2">{{ stat.key }}</div>
-    <div class="font-bold mr-2">{{ stat.value }}</div>
+  <div
+    v-for="[key, value] in stats"
+    class="flex items-cente text-lg"
+    :key="key"
+  >
+    <div class="font-bold mr-2">{{ key }}:</div>
+    <div class="mr-2">{{ value }}</div>
   </div>
 </template>
 
@@ -9,10 +13,12 @@
 import axios from "axios";
 export default {
   async setup() {
-    const stats = await axios.get("match-rate-statistics");
+    const { data } = await axios.get("match-rate-statistics");
+
+    console.log(new Map(Object.entries(data)));
 
     return {
-      stats: new Map(Object.entries(stats)),
+      stats: new Map(Object.entries(data)),
     };
   },
 };
