@@ -1,4 +1,19 @@
 <template>
+  <div class="bg-gray-600 w-full rounded-xl mb-12 flex items-center">
+    <div class="p-12 flex-1 text-red-400">
+      <h1 class="text-6xl font-bold">??%</h1>
+      <h2 class="text-xl font-semibold mt-1">
+        Click through rate (old onboarders)
+      </h2>
+    </div>
+    <div class="p-12 flex-1 text-red-400">
+      <h1 class="text-6xl font-bold">??%</h1>
+      <h2 class="text-xl font-semibold mt-1">
+        Click through rate (new onboarders)
+      </h2>
+    </div>
+  </div>
+
   <h1 class="text-8xl font-bold">
     {{ average_match_rate }}
     <span class="text-lg text-gray-400"
