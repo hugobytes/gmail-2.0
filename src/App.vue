@@ -8,9 +8,10 @@
         my-8
         mx-auto
         text-center text-green-400
+        animate-bounce
       "
     >
-      Match Rate
+      Match Rate Analysis
     </h1>
     <suspense>
       <template #default> <match-rate-statistics /> </template>

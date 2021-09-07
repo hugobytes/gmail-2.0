@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+html, body {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 500;
+}
 
 .bounce-enter-active {
     animation: bounce-in .5s;
