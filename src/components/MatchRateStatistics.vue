@@ -1,7 +1,7 @@
 <template>
   <h1 class="text-8xl font-bold">
     {{ average_match_rate }}
-    <span class="text-sm text-gray-500"
+    <span class="text-lg text-gray-400"
       >+- {{ average_match_rate_confidence_interval.toFixed(2) }}</span
     >
   </h1>
@@ -11,7 +11,14 @@
     <div class="flex-1">
       <h1 class="text-6xl font-bold mt-12">
         {{ average_match_rate_per_application }}
+        <span class="text-lg text-gray-400"
+          >+-
+          {{
+            average_match_rate_confidence_interval_per_application.toFixed(2)
+          }}</span
+        >
       </h1>
+
       <h2 class="text-xl font-semibold mt-1">
         Average match rate per application
       </h2>
@@ -32,7 +39,14 @@
     <div class="flex-1">
       <h1 class="text-6xl font-bold mt-12">
         {{ average_match_rate_per_shortlisted }}
+        <span class="text-lg text-gray-400"
+          >+-
+          {{
+            average_match_rate_confidence_interval_per_shortlisted.toFixed(2)
+          }}</span
+        >
       </h1>
+
       <h2 class="text-xl font-semibold mt-1">
         Average match rate per shortlisted candidate
       </h2>
@@ -183,6 +197,10 @@ export default {
       ratesByState,
       average_match_rate_confidence_interval:
         stats.average_match_rate_confidence_interval,
+      average_match_rate_confidence_interval_per_application:
+        stats.average_match_rate_confidence_interval_per_application,
+      average_match_rate_confidence_interval_per_shortlisted:
+        stats.average_match_rate_confidence_interval_per_shortlisted,
     };
   },
 
