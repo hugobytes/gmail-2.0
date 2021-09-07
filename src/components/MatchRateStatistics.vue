@@ -1,5 +1,10 @@
 <template>
-  <h1 class="text-8xl font-bold">{{ average_match_rate }}</h1>
+  <h1 class="text-8xl font-bold">
+    {{ average_match_rate }}
+    <span class="text-sm text-gray-500"
+      >+- {{ average_match_rate_confidence_interval.toFixed(2) }}</span
+    >
+  </h1>
   <h2 class="text-xl font-semibold mt-1">Average match rate</h2>
 
   <div class="flex">
@@ -176,6 +181,8 @@ export default {
         stats.average_match_rate_per_shortlisted,
       average_match_rate_per_shortlisted_per_sector,
       ratesByState,
+      average_match_rate_confidence_interval:
+        stats.average_match_rate_confidence_interval,
     };
   },
 

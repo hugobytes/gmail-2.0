@@ -21,7 +21,7 @@
             justify-center
             flex
             h-screen
-            w-screen
+            w-full
             items-center
             animate-bounce
           "
