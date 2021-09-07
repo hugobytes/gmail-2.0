@@ -19,7 +19,7 @@
         <div class="font-bold mr-2">{{ key }}:</div>
         <div class="mr-2">{{ value }}</div>
         <div class="text-gray-400">
-          +- {{ getConfidenceIntervalForApplication(key) }}
+          {{ getConfidenceIntervalForApplication(key) }}
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
         <div class="font-bold mr-2">{{ key }}:</div>
         <div class="mr-2">{{ value }}</div>
         <div class="text-gray-400">
-          +- {{ getConfidenceIntervalForShortlisted(key) }}
+          {{ getConfidenceIntervalForShortlisted(key) }}
         </div>
       </div>
     </div>
@@ -73,30 +73,15 @@ const confidenceIntervalsForApplications = {
   "Nurole Professional services": 22.743739938677905,
   "Nurole VC": 20.242883009291575,
   "Nurole Healthcare": 24.380356179081375,
-  "Warpaint London plc": 20.552583998789032,
   "Nurole Energy & natural resources": 2.498260983224114,
   "Nurole Industrial": 28.291913983303402,
-  Piclo: 90.8286533820502,
   "Nurole Social impact": 16.683973658058125,
-  "You Garden Ltd": 65.15954325764335,
   "Nurole Affiliate": 12.324284922323649,
   "Nurole Media": 2.196923815677607,
 };
 
 const confidenceIntervalsForShortlisted = {
-  "Nurole Financial": 43.083580186040045,
-  "Nurole VC": 63.272907292316646,
-  "Nurole Real estate": 28.674838048768333,
-  "Nurole Healthcare": 96,
-  "Nurole Consumer": 64.02755992359313,
-  "Nurole Education": 22.868941103606694,
   "Nurole NFP": 11.37660228221634,
-  "You Garden Ltd": 79.04,
-  "Nurole Technology": 46.02623634618092,
-  "Nurole Government & regulatory": 51.38034720529528,
-  "Nurole Industrial": 62.22814141774873,
-  Piclo: 94,
-  "Nurole PE": 61.24,
 };
 
 export default {
@@ -109,9 +94,9 @@ export default {
       ].sort((a, b) => b[1] - a[1])
     );
     const average_match_rate_per_shortlisted_per_sector = new Map(
-      [
-        ...Object.entries(stats.average_match_rate_per_shortlisted_per_sector),
-      ].sort((a, b) => b[1] - a[1])
+      [...Object.entries(stats.average_match_rate_per_shortlisted_per_sector)]
+        .sort((a, b) => b[1] - a[1])
+        .filter(([key, value]) => key.includes("Nurole"))
     );
 
     const ratesByState = [
@@ -196,10 +181,12 @@ export default {
 
   methods: {
     getConfidenceIntervalForApplication(sectorName) {
-      return confidenceIntervalsForApplications[sectorName].toFixed(2);
+      if (!confidenceIntervalsForApplications[sectorName]) return "";
+      return `+- ${confidenceIntervalsForApplications[sectorName].toFixed(2)}`;
     },
     getConfidenceIntervalForShortlisted(sectorName) {
-      return confidenceIntervalsForShortlisted[sectorName].toFixed(2);
+      if (!confidenceIntervalsForShortlisted[sectorName]) return "";
+      return `+- ${confidenceIntervalsForShortlisted[sectorName].toFixed(2)}`;
     },
   },
 };
