@@ -12,7 +12,7 @@
       </h2>
       <div
         v-for="[key, value] in average_match_rate_per_application_per_sector"
-        class="ml-2 flex items-cente text-sm"
+        class="ml-2 flex items-cente text"
         :key="key"
       >
         <div class="font-bold mr-2">{{ key }}:</div>
@@ -29,7 +29,7 @@
       </h2>
       <div
         v-for="[key, value] in average_match_rate_per_shortlisted_per_sector"
-        class="ml-2 flex items-cente text-sm"
+        class="ml-2 flex items-cente text"
         :key="key"
       >
         <div class="font-bold mr-2">{{ key }}:</div>
@@ -47,10 +47,14 @@ export default {
     const { data: stats } = await axios.get("match-rate-statistics");
 
     const average_match_rate_per_application_per_sector = new Map(
-      Object.entries(stats.average_match_rate_per_application_per_sector)
+      [
+        ...Object.entries(stats.average_match_rate_per_application_per_sector),
+      ].sort((a, b) => b[1] - a[1])
     );
     const average_match_rate_per_shortlisted_per_sector = new Map(
-      Object.entries(stats.average_match_rate_per_shortlisted_per_sector)
+      [
+        ...Object.entries(stats.average_match_rate_per_shortlisted_per_sector),
+      ].sort((a, b) => b[1] - a[1])
     );
 
     return {
